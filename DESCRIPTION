@@ -8,5 +8,5 @@ Description: RStudio内でYouTubeによる授業動画と、講師のライブ�
 License: MIT
 Encoding: UTF-8
 LazyData: true
-Imports: rstudioapi
+Imports: rstudioapi, tubeplayR
 Remotes: rundel/livecode, kazutan/tubeplayR
