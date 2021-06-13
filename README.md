@@ -20,8 +20,9 @@
 パッケージは、GitHubで公開していますので、以下のように remotes パッケージの `install_github()` 関数でインストールしてください。
 
 ```r
-remotes::insutall_github("ltl-manabi/olp")
+remotes::install_github("ltl-manabi/olp")
 ```
+
 
 ## パッケージの使い方
 
@@ -37,7 +38,7 @@ remotes::insutall_github("ltl-manabi/olp")
 
 それぞれ、書いてある通りですが、講師から共有されたURLを入力し、"OK" を押してください。入力されたURLについては、何もチェックをしていないので、受講者がコピペミスなどでうまく表示されない、という場合は、もういちどアドインをメニューから選択し、やり直してください。あるいは、誰かそのような機能を実装してください。
 
-URLを入力すると、RStudioのViewerペインに、YouTubeの講義動画が、別ウィンドウで講師が共有するライブコーディングのファイルが表示されます。
+URLを入力すると、RStudioのViewerペインに、YouTubeの講義動画が、別ウィンドウ (またはタブ) で講師が共有するライブコーディングのファイルが表示されます。
 
 ![](./olp_demo.png)
 
@@ -45,19 +46,21 @@ URLを入力すると、RStudioのViewerペインに、YouTubeの講義動画が
 
 なお、パッケージをインストールしたら、以降 `library()` などで読み込む必要はありません。
 
+
 ## パッケージの仕組み
 
 開発者はシロウトなので、仕組みはシンプルで、以下のようなものです。
 
-1. 授業のオンライン配信はYouTube Liveで行う (一般公開でも限定公開でも、URLでアクセスできる形で)
-1. [kazutan](https://github.com/kazutan)先生による[tubeplayR](https://github.com/kazutan/tubeplayR)パッケージでRStudioのペインに動画を表示する
-1. [Colin Rundel](https://github.com/rundel)氏による[livecode](https://github.com/rundel/livecode)パッケージで、講師が操作するRファイルを共有する (ここではLive Codeと呼びます)
+1. (講師側) 授業のオンライン配信はYouTube Liveで行う (一般公開でも限定公開でも、URLでアクセスできる形で)
+1. (講師側) [Colin Rundel](https://github.com/rundel)氏による[livecode](https://github.com/rundel/livecode)パッケージで、講師が操作するRファイルを共有する (ここではLive Codeと呼びます)
     * livecodeパッケージでは、[ngrok](https://ngrok.com/)という仕組みを使い、ネットワークをトンネリングしてファイルを直接インターネットに公開する
-    * 共有用のURLに[bit.ly](https://bitly.com/)を使うよう設定ができる
-1. Shinyで作成するウィンドウに`iframe`タグで共有されたLive Codeを表示する
-1. 上記を実現するために、YouTubeとLive CodeのURLを入力するダイアログを表示する
+    * 共有用のURLに[bit.ly](https://bitly.com/)を使うよう設定ができる (が、インターネット越しにアクセスできるURLではない)
+1. (受講者側) [kazutan](https://github.com/kazutan)先生による[tubeplayR](https://github.com/kazutan/tubeplayR)パッケージでRStudioのペインに動画を表示する
+1. (受講者側) `browseURL()` 関数でLive Codeを表示する
+1. (受講者側) 上記を実現するために、YouTubeとLive CodeのURLを入力するダイアログを表示する
 
 なお、このパッケージ (アドイン) は完全に受講者向けのもので、講師向けの機能はいっさいありません。講師は、授業の開始前に、それぞれ個別にYouTube Liveの配信準備と、livecodeパッケージによるファイルの共有をしておいてください。
+
 
 ## 講師側の準備
 
@@ -68,7 +71,7 @@ URLを入力すると、RStudioのViewerペインに、YouTubeの講義動画が
 
 ### ライブコーディングのインターネット越しの共有
 
-上記のように、ライブコーディングの共有は、ngrokを用いています。デフォルトでは、ngrokは (あるいはlivecodeパッケージは) 同一LAN内での共有しかできません。インターネット越しに共有したい場合は、[livecodeのissue](https://github.com/rundel/livecode/issues/8)にあるように、別途[ngrokの実行ファイル](https://ngrok.com/download)をダウンロード、インストール (PATHの通ったところに配置) し、`system()` 関数で外部に向けたトンネルを作成する必要があります。
+上記のように、ライブコーディングの共有は、ngrokを用いています。デフォルトでは、ngrokは (あるいはlivecodeパッケージは) 同一LAN内での共有しかできません。インターネット越しに共有したい場合は、[livecodeのissue](https://github.com/rundel/livecode/issues/8)にあるように、別途[ngrokの実行ファイル](https://ngrok.com/download)をダウンロード、インストール (PATHの通ったところやカレントディレクトリに配置) し、`system()` 関数で外部に向けたトンネルを作成する必要があります。
 
 ただ、RStudio CloudやWSL上で動かすRStudio Serverでは、`system()` 関数の実行結果がコンソールに返ってこないので、ローカルのURLを控えて、"Terminal" で
 
@@ -76,7 +79,8 @@ URLを入力すると、RStudioのViewerペインに、YouTubeの講義動画が
 ./ngrok http URL
 ```
 
-としたほうが良いでしょう。そのようにして得られたURLを受講者に共有してください。
+としたほうが良いでしょう。そのようにして得られたURL (http://xxxx.ngrok.io) を受講者に共有してください。
+
 
 ### 環境の共有
 
