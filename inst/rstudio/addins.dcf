@@ -1,4 +1,4 @@
 Name: オンライン学習を始める
 Description: RStudioを用いたオンライン学習を開始します
 Binding: olpAddin
-Interactive: false
+Interactive: true
