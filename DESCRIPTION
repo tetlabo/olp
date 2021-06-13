@@ -9,5 +9,4 @@ License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports: rstudioapi
-Remotes: rundel/livecode
-Remotes: kazutan/tubeplayR
+Remotes: rundel/livecode, kazutan/tubeplayR
