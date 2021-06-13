@@ -1,11 +1,13 @@
 Package: olp
 Type: Package
-Title: What the Package Does (Title Case)
+Title: RStudioを用いたオンライン学習をサポートするためのパッケージ
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Kenta Tanaka
+Maintainer: Kenta Tanaka <tanaka@mana.bi>
+Description: RStudio内でYouTubeによる授業動画と、講師のライブコーディングを表示し、学習できる環境を提供します。
+License: MIT
 Encoding: UTF-8
 LazyData: true
+Imports: rstudioapi
+Remotes: rundel/livecode
+Remotes: kazutan/tubeplayR
