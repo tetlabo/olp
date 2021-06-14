@@ -12,6 +12,8 @@
 
 ## このパッケージについて
 
+[![](https://img.youtube.com/vi/UYZZ6N02oto/0.jpg)](https://www.youtube.com/watch?v=UYZZ6N02oto)
+
 このパッケージは、RStudioのアドインです。RStudioを用いた、動画とライブコーディングによるオンライン授業を受講するための環境を提供します。"olp" は、Online Learning Preparationとか、そんなイメージです。CRANにそのような名前のパッケージがなかったので、そう命名しました。
 
 
